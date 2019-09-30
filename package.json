@@ -1,0 +1,39 @@
+{
+  "name": "perf-widget",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ramda": "^0.26.1"
+  },
+  "scripts": {
+    "start": "yarn start:shim & yarn start:embed",
+    "start:shim": "NODE_ENV=development webpack-dev-server --mode development --config webpack/shim/dev.config.js",
+    "start:embed": "NODE_ENV=development webpack-dev-server --mode development --config webpack/embed/dev.config.js",
+    "build:shim": "NODE_ENV=production webpack --mode production --config webpack/shim/prod.config.js",
+    "build:embed": "NODE_ENV=production webpack --mode production --config webpack/embed/prod.config.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/react": "^16.9.3",
+    "@types/react-dom": "^16.9.1",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/webpack-env": "^1.14.0",
+    "babel-loader": "^8.0.6",
+    "source-map-loader": "^0.2.4",
+    "tslint": "^5.20.0",
+    "tslint-react": "^4.1.0",
+    "typescript": "^3.6.3",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1",
+    "webpack-merge": "^4.2.2"
+  }
+}

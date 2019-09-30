@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react",
+    "baseUrl": "./src",
+    "paths": {
+      "api/*": ["api/*"],
+      "components/*": ["components/*"],
+      "config/*": ["config/*"],
+      "containers/*": ["containers/*"],
+      "constants/*": ["constants/*"],
+      "layouts/*": ["layouts/*"],
+      "modules/*": ["modules/*"],
+      "shared/*": ["shared/*"],
+      "utils/*": ["utils/*"]
+    }
+  },
+}
