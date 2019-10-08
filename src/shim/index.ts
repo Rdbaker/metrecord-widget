@@ -38,20 +38,13 @@ class Snapper {
     }, "*");
   }
 
-  public time = (metric: string) => {
-    const time = performance.now();
+  public time = (metric: string, timeMs: number) => {
     this.ensureAllowed();
     this.ensureMounted();
-    if (!this.timerMap.hasOwnProperty(metric)) {
-      this.timerMap[metric] = time;
-    } else {
-      const diff = time - this.timerMap[metric];
-      delete this.timerMap[metric];
-      this.iframe.contentWindow.postMessage({
-        type: EventTypes.TIME,
-        value: { time_ms: diff, metric },
-      }, "*");
-    }
+    this.iframe.contentWindow.postMessage({
+      type: EventTypes.TIME,
+      value: { time_ms: timeMs, metric },
+    }, "*");
   }
 
   public increment = (metric: string, amount: number = 1) => {
