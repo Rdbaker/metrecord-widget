@@ -2,7 +2,8 @@ import { ISnapMessage } from "shared/interfaces";
 
 import { getEventManager } from "./eventManager";
 
-import "./initFrame";
+// register all listeners
+import "./listeners";
 
 const handleSnapMessage = (message: ISnapMessage) => {
   getEventManager().emit(message.type, message);
@@ -19,5 +20,3 @@ const handleRawMessage = (event: MessageEvent) => {
 };
 
 window.addEventListener("message", handleRawMessage, false);
-
-window.parent.postMessage({type: "BOOTSTRAP_DONE"}, "*");

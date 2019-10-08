@@ -8,7 +8,7 @@
     "jsx": "react",
     "baseUrl": "./src",
     "paths": {
-      "api/*": ["api/*"],
+      "api/*": ["embed/api/*"],
       "components/*": ["components/*"],
       "config/*": ["config/*"],
       "containers/*": ["containers/*"],
@@ -16,7 +16,7 @@
       "layouts/*": ["layouts/*"],
       "modules/*": ["modules/*"],
       "shared/*": ["shared/*"],
-      "utils/*": ["utils/*"]
+      "utils/*": ["embed/utils/*"]
     }
   },
 }

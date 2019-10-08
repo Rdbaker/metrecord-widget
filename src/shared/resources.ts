@@ -1,5 +1,5 @@
 let ResourcesConstants;
-declare const ENVIRONMENT;
+let ENVIRONMENT = "";
 
 if (ENVIRONMENT === "production") {
   ResourcesConstants = {
@@ -8,15 +8,15 @@ if (ENVIRONMENT === "production") {
     IFRAME_URL: "https://js.snapper.org/embed/index.html",
     WS_URL: "wss://snapperapi.herokuapp.com",
     WWW_URL: "https://www.agorachat.org",
-  }
+  };
 } else {
   ResourcesConstants = {
-    API_URL: "http://lcl.snapper.org:4000",
+    API_URL: "http://localhost:4000",
     APP_URL: "http://localhost:3000",
     IFRAME_URL: "http://localhost:9001/index-embed.html",
-    WS_URL: "ws://lcl.snapper.org:4000",
-    WWW_URL: "https://lcl.snapper.org:4000",
-  }
+    WS_URL: "ws://localhost:4000",
+    WWW_URL: "https://localhost:4000",
+  };
 }
 
 export const DEBUG = ENVIRONMENT !== "production";

@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "phoenix": "^1.4.10",
     "ramda": "^0.26.1"
   },
   "scripts": {
@@ -16,17 +17,19 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
-    "@babel/preset-react": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-proposal-numeric-separator": "^7.2.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.6.0",
+    "@types/phoenix": "^1.4.3",
     "@types/react": "^16.9.3",
     "@types/react-dom": "^16.9.1",
     "@types/react-router-dom": "^5.1.0",
     "@types/webpack-env": "^1.14.0",
     "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
     "source-map-loader": "^0.2.4",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0",

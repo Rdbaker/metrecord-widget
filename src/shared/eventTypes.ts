@@ -5,3 +5,4 @@ export const BOOTSTRAP_DONE = "BOOTSTRAP_DONE";
 export const INIT_IFRAME = "INIT_IFRAME";
 export const TIME = "TIME";
 export const INCREMENT_COUNT = "INCREMENT_COUNT";
+export const PUSH_EVENT = "PUSH_EVENT";

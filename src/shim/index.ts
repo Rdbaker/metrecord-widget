@@ -49,17 +49,17 @@ class Snapper {
       delete this.timerMap[metric];
       this.iframe.contentWindow.postMessage({
         type: EventTypes.TIME,
-        value: { time: diff, metric },
+        value: { time_ms: diff, metric },
       }, "*");
     }
   }
 
-  public increment = (metric: string) => {
+  public increment = (metric: string, amount: number = 1) => {
     this.ensureAllowed();
     this.ensureMounted();
     this.iframe.contentWindow.postMessage({
       type: EventTypes.INCREMENT_COUNT,
-      value: { metric },
+      value: { metric, amount },
     }, "*");
   }
 

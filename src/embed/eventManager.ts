@@ -16,7 +16,6 @@ class EventManager {
   }
 
   public emit(eventName: string, event: ISnapMessage) {
-    console.log("emitting", eventName, event);
     (this.eventMap[eventName] || []).forEach((func) => func.call(undefined, event));
   }
 }
