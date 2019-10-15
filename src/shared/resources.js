@@ -1,13 +1,12 @@
 let ResourcesConstants;
-let ENVIRONMENT = "";
 
 if (ENVIRONMENT === "production") {
   ResourcesConstants = {
-    API_URL: "https://snapperapi.herokuapp.com",
-    APP_URL: "https://app.agorachat.org",
-    IFRAME_URL: "https://js.snapper.org/embed/index.html",
-    WS_URL: "wss://snapperapi.herokuapp.com",
-    WWW_URL: "https://www.agorachat.org",
+    API_URL: "https://api.getquicksnap.com",
+    APP_URL: "https://app.getquicksnap.com",
+    IFRAME_URL: "https://js.getquicksnap.com/widget/index.html",
+    WS_URL: "wss://api.getquicksnap.com",
+    WWW_URL: "https://www.getquicksnap.com",
   };
 } else {
   ResourcesConstants = {
