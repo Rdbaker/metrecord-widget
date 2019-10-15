@@ -40,15 +40,15 @@ export interface IPerformanceContext {
 
 const getPerformance = (): Performance => {
   try {
-    return window.performance.toJSON();
+    return JSON.parse(JSON.stringify(window.performance.toJSON()));
   } catch (e) {
     return null;
   }
 }
 
-const getUserAgent = (): String => window.navigator.userAgent;
-const getLanguages = (): readonly String[] => window.navigator.languages;
-const getPreferredLanguage = (): String => window.navigator.language;
+const getUserAgent = (): string => window.navigator.userAgent;
+const getLanguages = (): readonly string[] => window.navigator.languages;
+const getPreferredLanguage = (): string => window.navigator.language;
 const getConnection = (): IConnectionInfo => {
   const conn: any = (window.navigator as any).connection || {};
   return {
@@ -60,8 +60,8 @@ const getConnection = (): IConnectionInfo => {
     type: conn.type,
   };
 };
-const getPlatform = (): String => window.navigator.platform;
-const getGBMemory = (): Number => (window.navigator as any).deviceMemory;
+const getPlatform = (): string => window.navigator.platform;
+const getGBMemory = (): number => (window.navigator as any).deviceMemory;
 const getLocation = (): ILocationContext => {
   const loc = window.location;
   return {

@@ -17,7 +17,6 @@ class Snapper {
   private onloadFunc: () => undefined;
   private clientId: string;
   private iframe: any;
-  private timerMap: any = {};
 
   constructor(onloadFunc = (): undefined => (void(0))) {
     this.onloadFunc = onloadFunc;
