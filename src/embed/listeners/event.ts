@@ -35,11 +35,6 @@ const handleBootstrapDone = (event: ISnapMessage) => {
     .receive("error", () => {
       console.warn("failed to join channel");
     });
-  channel.push("record_context", {
-    client_id: clientId,
-    end_user_id: user,
-    user_context: bootstrapDoneEvent.context,
-  });
 };
 
 const handleTimerEventPublish = (event: ISnapMessage) => {

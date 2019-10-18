@@ -137,7 +137,7 @@ class Snapper {
   }
 
   private runPriorCalls = () => {
-    const allowedCalls = ["snap", "debug", "time"];
+    const allowedCalls = ["snap", "debug", "time", "increment"];
     const priorCalls = ((window as any).snapper && (window as any).snapper._c && typeof (window as any).snapper._c === "object") ? (window as any).snapper._c : [];
     priorCalls.forEach((call: string[]) => {
       const method = call[0];
