@@ -2,7 +2,7 @@ import { IPerformanceContext } from "./context";
 
 export interface ISnapMessage {
   type: string;
-  value: object | ISnapInitEventValue | ISnapBootstrapDoneEventValue | ISnapTimerEventValue;
+  value: object | ISnapInitEventValue | ISnapBootstrapDoneEventValue | ISnapTrackEventValue;
 }
 
 export interface IEventMap {
@@ -21,14 +21,9 @@ export interface ISnapBootstrapDoneEventValue {
   clientId: string;
 }
 
-export interface ISnapTimerEventValue {
+export interface ISnapTrackEventValue {
   metric: string;
-  time_ms: number;
-}
-
-export interface ISnapIncrementEventValue {
-  metric: string;
-  amount: number;
+  value: number;
 }
 
 export interface ISnapSnapshotEventValue {

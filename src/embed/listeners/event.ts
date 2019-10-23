@@ -1,7 +1,7 @@
 import { Socket } from "phoenix";
 
-import { BOOTSTRAP_DONE, INCREMENT_COUNT, PUSH_EVENT, TIME, RECORD_SNAPSHOT } from "shared/eventTypes";
-import { ISnapBootstrapDoneEventValue, ISnapMessage, ISnapTimerEventValue, ISnapIncrementEventValue, ISnapSnapshotEventValue } from "shared/interfaces";
+import { BOOTSTRAP_DONE, PUSH_EVENT, RECORD_SNAPSHOT, TRACK } from "shared/eventTypes";
+import { ISnapBootstrapDoneEventValue, ISnapMessage, ISnapSnapshotEventValue, ISnapTrackEventValue } from "shared/interfaces";
 import { WS_URL } from "shared/resources";
 import { getEventManager } from "../eventManager";
 
@@ -37,21 +37,9 @@ const handleBootstrapDone = (event: ISnapMessage) => {
     });
 };
 
-const handleTimerEventPublish = (event: ISnapMessage) => {
-  const timerEvent: ISnapTimerEventValue = (event.value as ISnapTimerEventValue);
-  channel.push("create:timer", { data: timerEvent, name: timerEvent.metric, client_id: clientId, end_user_id: userId });
-};
-
-const handleIncrementEventPublish = (event: ISnapMessage) => {
-  const incrementEvent: ISnapIncrementEventValue = (event.value as ISnapIncrementEventValue);
-  channel.push(
-    "create:increment",
-    {
-      client_id: clientId,
-      data: incrementEvent,
-      end_user_id: userId,
-      name: incrementEvent.metric,
-    });
+const handleTrackEventPublish = (event: ISnapMessage) => {
+  const timerEvent: ISnapTrackEventValue = (event.value as ISnapTrackEventValue);
+  channel.push("create:track", { data: timerEvent, name: timerEvent.metric, client_id: clientId, end_user_id: userId });
 };
 
 const recordSnapshot = (event: ISnapMessage) => {
@@ -64,6 +52,5 @@ const recordSnapshot = (event: ISnapMessage) => {
 };
 
 manager.addEventListener(BOOTSTRAP_DONE, handleBootstrapDone);
-manager.addEventListener(TIME, handleTimerEventPublish);
-manager.addEventListener(INCREMENT_COUNT, handleIncrementEventPublish);
+manager.addEventListener(TRACK, handleTrackEventPublish);
 manager.addEventListener(RECORD_SNAPSHOT, recordSnapshot);

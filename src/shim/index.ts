@@ -37,21 +37,12 @@ class Snapper {
     }, "*");
   }
 
-  public time = (metric: string, timeMs: number) => {
+  public track = (metric: string, value: number) => {
     this.ensureAllowed();
     this.ensureMounted();
     this.iframe.contentWindow.postMessage({
-      type: EventTypes.TIME,
-      value: { time_ms: timeMs, metric },
-    }, "*");
-  }
-
-  public increment = (metric: string, amount: number = 1) => {
-    this.ensureAllowed();
-    this.ensureMounted();
-    this.iframe.contentWindow.postMessage({
-      type: EventTypes.INCREMENT_COUNT,
-      value: { metric, amount },
+      type: EventTypes.TRACK,
+      value: { value, metric },
     }, "*");
   }
 
@@ -105,9 +96,8 @@ class Snapper {
   private handleBootstrapDone = () => {
     const snapperApi = (window as any).snapper;
     snapperApi.snap = this.snap;
-    snapperApi.time = this.time;
+    snapperApi.track = this.track;
     snapperApi.debug = this.debug;
-    snapperApi.increment = this.increment;
     snapperApi._c = (window as any).snapper._c;
 
     this.runPriorCalls();
@@ -137,7 +127,7 @@ class Snapper {
   }
 
   private runPriorCalls = () => {
-    const allowedCalls = ["snap", "debug", "time", "increment"];
+    const allowedCalls = ["snap", "debug", "track"];
     const priorCalls = ((window as any).snapper && (window as any).snapper._c && typeof (window as any).snapper._c === "object") ? (window as any).snapper._c : [];
     priorCalls.forEach((call: string[]) => {
       const method = call[0];

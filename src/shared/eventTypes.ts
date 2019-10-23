@@ -3,6 +3,5 @@ export const SET_DEBUG_MODE = "SET_DEBUG_MODE";
 export const DOMAIN_NOT_ALLOWED = "DOMAIN_NOT_ALLOWED";
 export const BOOTSTRAP_DONE = "BOOTSTRAP_DONE";
 export const INIT_IFRAME = "INIT_IFRAME";
-export const TIME = "TIME";
-export const INCREMENT_COUNT = "INCREMENT_COUNT";
+export const TRACK = "TRACK";
 export const PUSH_EVENT = "PUSH_EVENT";
