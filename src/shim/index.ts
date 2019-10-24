@@ -37,7 +37,7 @@ class Snapper {
     }, "*");
   }
 
-  public track = (metric: string, value: number) => {
+  public track = (metric: string, value: number = 1) => {
     this.ensureAllowed();
     this.ensureMounted();
     this.iframe.contentWindow.postMessage({

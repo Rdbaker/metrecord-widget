@@ -38,8 +38,8 @@ const handleBootstrapDone = (event: ISnapMessage) => {
 };
 
 const handleTrackEventPublish = (event: ISnapMessage) => {
-  const timerEvent: ISnapTrackEventValue = (event.value as ISnapTrackEventValue);
-  channel.push("create:track", { data: timerEvent, name: timerEvent.metric, client_id: clientId, end_user_id: userId });
+  const trackEvent: ISnapTrackEventValue = (event.value as ISnapTrackEventValue);
+  channel.push("create:track", { data: trackEvent, name: trackEvent.metric, client_id: clientId, end_user_id: userId });
 };
 
 const recordSnapshot = (event: ISnapMessage) => {
