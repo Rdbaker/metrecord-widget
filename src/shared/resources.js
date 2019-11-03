@@ -2,11 +2,11 @@ let ResourcesConstants;
 
 if (ENVIRONMENT === "production") {
   ResourcesConstants = {
-    API_URL: "https://api.getquicksnap.com",
-    APP_URL: "https://app.getquicksnap.com",
-    IFRAME_URL: "https://js.getquicksnap.com/widget/index.html",
-    WS_URL: "wss://api.getquicksnap.com",
-    WWW_URL: "https://www.getquicksnap.com",
+    API_URL: "https://api.metrecord.com",
+    APP_URL: "https://app.metrecord.com",
+    IFRAME_URL: "https://js.metrecord.com/widget/index.html",
+    WS_URL: "wss://api.metrecord.com",
+    WWW_URL: "https://www.metrecord.com",
   };
 } else {
   ResourcesConstants = {

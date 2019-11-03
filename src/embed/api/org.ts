@@ -5,7 +5,7 @@ export const OrgAPI = {
     return fetch(`${API_URL}/widget/orgs/${clientId}`, {
       headers: {
         "Content-Type": "application/json",
-        "X-Snapper-Client-Id": clientId,
+        "X-Metrecord-Client-Id": clientId,
       },
       method: "GET",
     });

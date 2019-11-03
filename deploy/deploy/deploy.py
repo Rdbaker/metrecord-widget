@@ -15,14 +15,14 @@ import boto3
 from .constants import Constants
 
 logging.basicConfig(format='%(name)-12s: %(levelname)-8s:%(message)s', level=logging.INFO)
-deploy_logger = logging.getLogger('quicksnap.uploader')
+deploy_logger = logging.getLogger('metrecord.uploader')
 
 S3 = boto3.resource('s3')
 
 
 def upload_arg_parser():
     parser = argparse.ArgumentParser(
-        description='Upload quicksnap widget static files.',
+        description='Upload metrecord widget static files.',
     )
     parser.add_argument('--environment', help='The bucket to upload the files to.', required=True,
         choices=['production', 'development'])

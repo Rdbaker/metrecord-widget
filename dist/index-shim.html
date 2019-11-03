@@ -9,16 +9,16 @@
     <h1>this is my cool webpage</h1>
     <script>
       (function(window, document) {
-        if (window.snapper) console.error('Snapper embed already included');
-        window.snapper = {}, m = ['init', 'snap', 'debug', 'track']; window.snapper._c = [];
-        m.forEach(me => window.snapper[me] = function() {window.snapper._c.push([me, arguments])});
+        if (window.metrecord) console.error('Metrecord embed already included');
+        window.metrecord = {}, m = ['init', 'snap', 'debug', 'track']; window.metrecord._c = [];
+        m.forEach(me => window.metrecord[me] = function() {window.metrecord._c.push([me, arguments])});
         var elt = document.createElement('script');
         elt.type = "text/javascript"; elt.async = true;
         elt.src = "shim.js";
         var before = document.getElementsByTagName('script')[0];
         before.parentNode.insertBefore(elt, before);
       })(window, document, undefined);
-      snapper.init('4O3kXSWQDLoo');
+      metrecord.init('4O3kXSWQDLoo');
   </script>
   </body>
 </html>

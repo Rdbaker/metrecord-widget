@@ -7,10 +7,10 @@ import * as EventTypes from "shared/eventTypes";
 import { IFRAME_URL } from "shared/resources";
 import uuid from "shared/uuid";
 
-const SNAPPER_WRAPPER_ID = "snapper-container";
-const IFRAME_ID = "snapper-iframe-element";
+const METRECORD_WRAPPER_ID = "metrecord-container";
+const IFRAME_ID = "metrecord-iframe-element";
 
-class Snapper {
+class Metrecord {
 
   private debugMode: boolean = false;
   private domainAllowed: boolean = true;
@@ -49,16 +49,16 @@ class Snapper {
   public debug = () => {
     this.ensureAllowed();
     this.debugMode = !this.debugMode;
-    console.info(`[Snapper] debug mode ${this.debugMode ? "enabled" : "disabled"}`);
+    console.info(`[Metrecord] debug mode ${this.debugMode ? "enabled" : "disabled"}`);
     this.iframe.contentWindow.postMessage({type: EventTypes.SET_DEBUG_MODE, value: this.debugMode}, "*");
   }
 
   private getUserId = () => {
     try {
-      const userId = localStorage.getItem("snapper_user_id");
+      const userId = localStorage.getItem("metrecord_user_id");
       if (!userId) {
         const newUserId = uuid();
-        localStorage.setItem("snapper_user_id", newUserId);
+        localStorage.setItem("metrecord_user_id", newUserId);
         return newUserId;
       } else {
         return userId;
@@ -70,7 +70,7 @@ class Snapper {
 
   private ensureMounted = () => {
     if (!document.getElementById(IFRAME_ID)) {
-      throw new UnmountedError("snapper.init needs to be called first");
+      throw new UnmountedError("metrecord.init needs to be called first");
     }
   }
 
@@ -94,14 +94,14 @@ class Snapper {
   }
 
   private handleBootstrapDone = () => {
-    const snapperApi = (window as any).snapper;
-    snapperApi.snap = this.snap;
-    snapperApi.track = this.track;
-    snapperApi.debug = this.debug;
-    snapperApi._c = (window as any).snapper._c;
+    const metrecordApi = (window as any).metrecord;
+    metrecordApi.snap = this.snap;
+    metrecordApi.track = this.track;
+    metrecordApi.debug = this.debug;
+    metrecordApi._c = (window as any).metrecord._c;
 
     this.runPriorCalls();
-    (window as any).snapper = snapperApi;
+    (window as any).metrecord = metrecordApi;
   }
 
   private handleDomainNotAllowed = () => {
@@ -128,7 +128,7 @@ class Snapper {
 
   private runPriorCalls = () => {
     const allowedCalls = ["snap", "debug", "track"];
-    const priorCalls = ((window as any).snapper && (window as any).snapper._c && typeof (window as any).snapper._c === "object") ? (window as any).snapper._c : [];
+    const priorCalls = ((window as any).metrecord && (window as any).metrecord._c && typeof (window as any).metrecord._c === "object") ? (window as any).metrecord._c : [];
     priorCalls.forEach((call: string[]) => {
       const method = call[0];
       const args = call[1];
@@ -136,14 +136,14 @@ class Snapper {
         (this as any)[method].apply(this, args);
       }
     });
-    this.onloadFunc.call((window as any).agora, (window as any).agora);
+    this.onloadFunc.call((window as any).metrecord, (window as any).metrecord);
   }
 
   private mountIframe = () => {
     if (!document.getElementById(IFRAME_ID)) {
       window.addEventListener("message", this.receiveMessage, false);
       const wrapper: any = document.createElement("div");
-      wrapper.id = SNAPPER_WRAPPER_ID;
+      wrapper.id = METRECORD_WRAPPER_ID;
       wrapper.style = `z-index: ${Number.MAX_SAFE_INTEGER}; width: 0; height: 0; position: relative;`;
       wrapper.appendChild(this.iframe);
       document.body.appendChild(wrapper);
@@ -153,17 +153,17 @@ class Snapper {
 
 export default ((window) => {
   const onloadFunc: () => undefined = (
-    window.snapper &&
-    window.snapper.onload &&
-    typeof window.snapper.onload === "function") ? window.snapper.onload : () => undefined;
-  const initCall = window.snapper._c.filter((call: string[]) => call[0] === "init")[0];
-  const snapperApi: () => undefined = () => undefined;
-  const snapper: Snapper = new Snapper(onloadFunc);
+    window.metrecord &&
+    window.metrecord.onload &&
+    typeof window.metrecord.onload === "function") ? window.metrecord.onload : () => undefined;
+  const initCall = window.metrecord._c.filter((call: string[]) => call[0] === "init")[0];
+  const metrecordApi: () => undefined = () => undefined;
+  const metrecord: Metrecord = new Metrecord(onloadFunc);
 
-  (snapperApi as any).init = snapper.init;
+  (metrecordApi as any).init = metrecord.init;
 
   if (initCall) {
-    (snapperApi as any)[initCall[0]].apply(snapperApi, initCall[1]);
+    (metrecordApi as any)[initCall[0]].apply(metrecordApi, initCall[1]);
   }
 
 })(window as any);
