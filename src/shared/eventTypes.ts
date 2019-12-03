@@ -5,3 +5,5 @@ export const BOOTSTRAP_DONE = "BOOTSTRAP_DONE";
 export const INIT_IFRAME = "INIT_IFRAME";
 export const TRACK = "TRACK";
 export const PUSH_EVENT = "PUSH_EVENT";
+export const ERROR = "ERROR";
+export const HIGH_CPU = 'HIGH_CPU';
