@@ -138,6 +138,10 @@ class Metrecord {
       name: error.name,
       clientTimestamp: Date.now(),
       context: getContext(),
+      clicks: this.clickStack.map(evt => ({
+        elt: evt.clickTarget.outerHTML,
+        clientTimestamp: evt.clientTimestamp,
+      }))
     };
     this.iframe.contentWindow.postMessage({
       type: EventTypes.ERROR,
