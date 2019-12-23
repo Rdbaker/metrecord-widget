@@ -2,7 +2,7 @@ import { IPerformanceContext } from "./context";
 
 export interface ISnapMessage {
   type: string;
-  value: object | ISnapInitEventValue | ISnapBootstrapDoneEventValue | ISnapTrackEventValue | ISnapErrorEventValue;
+  value: object | ISnapInitEventValue | ISnapBootstrapDoneEventValue | ISnapTrackEventValue | ISnapErrorEventValue | ISnapAjaxEventValue;
 }
 
 export interface IEventMap {
@@ -12,6 +12,13 @@ export interface IEventMap {
 export interface ISnapHighCPUEventValue {
   cpuPctUtilization: number;
   clicks: IClickTrackForAPI[];
+  context: IPerformanceContext;
+}
+
+export interface ISnapAjaxEventValue {
+  value: number;
+  request: any;
+  response: any;
   context: IPerformanceContext;
 }
 
@@ -45,6 +52,7 @@ export interface ISnapBootstrapDoneEventValue {
 export interface ISnapTrackEventValue {
   metric: string;
   value: number;
+  context: IPerformanceContext;
 }
 
 export interface ISnapSnapshotEventValue {

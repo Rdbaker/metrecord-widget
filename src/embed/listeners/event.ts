@@ -1,6 +1,14 @@
 import { Socket } from "phoenix";
 
-import { BOOTSTRAP_DONE, PUSH_EVENT, RECORD_SNAPSHOT, TRACK, ERROR, HIGH_CPU } from "shared/eventTypes";
+import {
+  BOOTSTRAP_DONE,
+  PUSH_EVENT,
+  RECORD_SNAPSHOT,
+  TRACK,
+  ERROR,
+  HIGH_CPU,
+  AJAX
+} from "shared/eventTypes";
 import {
   ISnapBootstrapDoneEventValue,
   ISnapMessage,
@@ -8,6 +16,7 @@ import {
   ISnapTrackEventValue,
   ISnapErrorEventValue,
   ISnapHighCPUEventValue,
+  ISnapAjaxEventValue,
 } from "shared/interfaces";
 import { WS_URL } from "shared/resources";
 import { getEventManager } from "../eventManager";
@@ -104,8 +113,20 @@ const recordHighCPU = (event: ISnapMessage) => {
   // }
 };
 
+const recordAjaxCall = (event: ISnapMessage) => {
+  const ajaxEvent: ISnapAjaxEventValue = (event.value as ISnapAjaxEventValue);
+  const args = ["create:ajax", { client_id: clientId, end_user_id: userId, data: ajaxEvent, name: `${ajaxEvent.request.uri}`}]
+  if (channel === null) {
+    channelNotReadyQueue.push(args);
+  } else {
+    emptyQueue();
+    channel.push(...args);
+  }
+}
+
 manager.addEventListener(BOOTSTRAP_DONE, handleBootstrapDone);
 manager.addEventListener(TRACK, handleTrackEventPublish);
 manager.addEventListener(RECORD_SNAPSHOT, recordSnapshot);
 manager.addEventListener(ERROR, handleErrorEventPublish);
 manager.addEventListener(HIGH_CPU, recordHighCPU);
+manager.addEventListener(AJAX, recordAjaxCall);

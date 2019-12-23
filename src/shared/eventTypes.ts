@@ -7,3 +7,4 @@ export const TRACK = "TRACK";
 export const PUSH_EVENT = "PUSH_EVENT";
 export const ERROR = "ERROR";
 export const HIGH_CPU = 'HIGH_CPU';
+export const AJAX = 'AJAX';

@@ -42,6 +42,7 @@ class Metrecord {
   }
 
   public registerEventHandlers = () => {
+    this.injectFetch();
     window.document.onclick = this.onDocumentClick;
     window.onerror = this.onWindowError;
     window.onunhandledrejection = this.onWindowUnhandledRejection;
@@ -66,7 +67,7 @@ class Metrecord {
     this.ensureMounted();
     this.iframe.contentWindow.postMessage({
       type: EventTypes.TRACK,
-      value: { value, metric },
+      value: { value, metric, context: getContext() },
     }, "*");
   }
 
@@ -75,6 +76,22 @@ class Metrecord {
     this.debugMode = !this.debugMode;
     console.info(`[Metrecord] debug mode ${this.debugMode ? "enabled" : "disabled"}`);
     this.iframe.contentWindow.postMessage({type: EventTypes.SET_DEBUG_MODE, value: this.debugMode}, "*");
+  }
+
+  private injectFetch = () => {
+    (window as any)._fetch = window.fetch;
+    window.fetch = (uri, options, ...args) => {
+      const start = window.performance.now();
+      return (window as any)._fetch(uri, options, ...args).then((response: any) => {
+        const responseData = {
+          status: response.status,
+          error: response.status < 400 ? null : response < 500 ? 'CLIENT' : 'SERVER'
+        };
+        const totalTime = window.performance.now() - start;
+        setTimeout(this.onFetchResponse.bind(this), 1, { uri, options, ...args }, totalTime, responseData);
+        return response;
+      });
+    };
   }
 
   private onDocumentClick = (e: any) => {
@@ -106,6 +123,17 @@ class Metrecord {
       type: EventTypes.HIGH_CPU,
       value: highCPUData,
     }, "*");
+  }
+
+  private onFetchResponse = (request: any, value: number, response: any) => {
+    this.iframe.contentWindow.postMessage({
+      type: EventTypes.AJAX,
+      value: {
+        request,
+        value,
+        response,
+      },
+    }, '*');
   }
 
   private onWindowUnhandledRejection = (e: any) => {
