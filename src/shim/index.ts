@@ -83,9 +83,15 @@ class Metrecord {
     window.fetch = (uri, options, ...args) => {
       const start = window.performance.now();
       return (window as any)._fetch(uri, options, ...args).then((response: any) => {
+        let error = null;
+        if (response.status >= 500) {
+          error = 'SERVER';
+        } else if (response.status >= 400) {
+          error = 'CLIENT';
+        }
         const responseData = {
           status: response.status,
-          error: response.status < 400 ? null : response < 500 ? 'CLIENT' : 'SERVER'
+          error,
         };
         const totalTime = window.performance.now() - start;
         setTimeout(this.onFetchResponse.bind(this), 1, { uri, options, ...args }, totalTime, responseData);
