@@ -93,8 +93,10 @@ class Metrecord {
           status: response.status,
           error,
         };
+        const copiedOptions = { ...options };
+        delete copiedOptions['body'];
         const totalTime = window.performance.now() - start;
-        setTimeout(this.onFetchResponse.bind(this), 1, { uri, options, ...args }, totalTime, responseData);
+        setTimeout(this.onFetchResponse.bind(this), 1, { uri, options: copiedOptions, ...args }, totalTime, responseData);
         return response;
       });
     };
