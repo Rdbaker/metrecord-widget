@@ -95,6 +95,9 @@ class Metrecord {
         };
         const copiedOptions = { ...options };
         delete copiedOptions['body'];
+        if (copiedOptions.hasOwnProperty('headers') && typeof copiedOptions.headers === 'object') {
+          delete (copiedOptions.headers as any)['Authorization'];
+        }
         const totalTime = window.performance.now() - start;
         setTimeout(this.onFetchResponse.bind(this), 1, { uri, options: copiedOptions, ...args }, totalTime, responseData);
         return response;
