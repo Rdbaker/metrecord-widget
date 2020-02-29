@@ -6,7 +6,7 @@ const paths = {
 }
 
 module.exports = {
-  entry: './src/embed/index.ts',
+  entry: './src/embed/index.tsx',
   devServer: {
     contentBase: path.join(__dirname, '..', '..', 'dist'),
     compress: true,
@@ -23,7 +23,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(tsx?)$/,
+        test: /\.((t|j)sx?)$/,
         include: path.join(__dirname, '..', '..', 'src/embed'),
         exclude: /(node_modules)/,
         loader: require.resolve('babel-loader'),

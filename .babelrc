@@ -1,5 +1,5 @@
 {
-  "presets": ["@babel/env", "@babel/typescript", "@babel/react"],
+  "presets": ["@babel/env", "@babel/typescript", "@babel/react", "react-app"],
   "plugins": [
     "@babel/plugin-proposal-numeric-separator",
     "@babel/proposal-class-properties",

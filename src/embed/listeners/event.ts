@@ -22,13 +22,11 @@ import { WS_URL } from "shared/resources";
 import { getEventManager } from "../eventManager";
 
 const manager = getEventManager();
-const socket = new Socket(`${WS_URL}/socket`);
 let channelNotReadyQueue: any[] = [];
 let channel: any = null;
 let userId: string = null;
 let clientId: string = null;
 
-socket.connect();
 
 
 const emptyQueue = () => {
@@ -45,6 +43,8 @@ const handleBootstrapDone = (event: ISnapMessage) => {
   clientId = bootstrapDoneEvent.clientId;
   userId = user;
 
+  const socket = new Socket(`${WS_URL}/socket`);
+  socket.connect({ end_user_id: user });
   channel = socket.channel(`event:${user}`, { client_id: clientId });
 
   channel.join()
