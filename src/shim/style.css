@@ -1,0 +1,31 @@
+#metrecord-container > #metrecord-iframe-element {
+  width: 0;
+  height: 0;
+  z-index: -1;
+  visibility: hidden;
+  display: none;
+  position: fixed;
+  border: none;
+  overflow: hidden;
+}
+
+#metrecord-container > #metrecord-iframe-element.error-initial-show {
+  width: 350px;
+  height: 90px;
+  visibility: visible;
+  display: initial;
+  position: fixed;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+}
+
+#metrecord-container > #metrecord-iframe-element.feedback-form {
+  width: 100vw;
+  height: 100vh;
+  display: initial;
+  top: 0;
+  left: 0;
+  visibility: initial;
+  z-index: 1;
+}

@@ -4,10 +4,21 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/pro-duotone-svg-icons": "^5.12.1",
+    "@fortawesome/pro-regular-svg-icons": "^5.12.1",
+    "@fortawesome/pro-solid-svg-icons": "^5.12.1",
+    "@fortawesome/react-fontawesome": "^0.1.8",
+    "classnames": "^2.2.6",
     "phoenix": "^1.4.10",
     "ramda": "^0.26.1",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "react-redux": "^7.2.0",
+    "react-transition-group": "^4.3.0",
+    "redux": "^4.0.5",
+    "redux-observable": "^1.2.0",
+    "rxjs": "^6.5.4"
   },
   "scripts": {
     "start": "yarn start:shim & yarn start:embed",
@@ -28,7 +39,9 @@
     "@types/phoenix": "^1.4.3",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
+    "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.0",
+    "@types/redux": "^3.6.0",
     "@types/webpack-env": "^1.14.0",
     "babel-loader": "^8.0.6",
     "babel-polyfill": "^6.26.0",

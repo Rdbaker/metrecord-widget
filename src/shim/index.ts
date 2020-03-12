@@ -6,9 +6,8 @@ import {
 import * as EventTypes from "shared/eventTypes";
 import { IFRAME_URL } from "shared/resources";
 import uuid from "shared/uuid";
-import { SizeLimitedStack } from "shared/sizeLimitedStack";
-import { IClickTrack, IPerformanceTrack } from "shared/interfaces";
-import { CPURecorder } from "shared/recordCpu";
+
+import './style.css';
 
 const METRECORD_WRAPPER_ID = "metrecord-container";
 const IFRAME_ID = "metrecord-iframe-element";
@@ -17,58 +16,20 @@ class Metrecord {
 
   private debugMode: boolean = false;
   private domainAllowed: boolean = true;
-  private alreadySnapped: boolean = false;
   private onloadFunc: () => undefined;
   private clientId: string;
   private iframe: any;
-  private clickStack: SizeLimitedStack<IClickTrack> = new SizeLimitedStack(500);
-  private cpuRecorder: CPURecorder;
   private appName: string;
 
   constructor(onloadFunc = (): undefined => (void(0))) {
     this.onloadFunc = onloadFunc;
-    this.cpuRecorder = new CPURecorder(this.handleHighCPU.bind(this), 0.8);
   }
 
   public init = (clientId: string, appName?: string) => {
     this.clientId = clientId;
     this.appName = appName;
-    this.registerEventHandlers();
     this.initializeIframe();
     this.mountIframe();
-    // if (!document.hidden) {
-    //   this.cpuRecorder.start();
-    // }
-  }
-
-  public registerEventHandlers = () => {
-    this.injectFetch();
-    window.document.onclick = this.onDocumentClick;
-    window.onerror = this.onWindowError;
-    window.onunhandledrejection = this.onWindowUnhandledRejection;
-    window.onblur = this.onWindowBlur;
-    window.onfocus = this.onWindowFocus;
-  }
-
-  public snap = () => {
-    this.ensureAllowed();
-    this.ensureMounted();
-    if (!this.alreadySnapped) {
-      this.alreadySnapped = true;
-      this.iframe.contentWindow.postMessage({
-        type: EventTypes.RECORD_SNAPSHOT,
-        value: { context: getContext(), user: this.getUserId() },
-      }, "*");
-    }
-  }
-
-  public track = (metric: string, value: number = 1) => {
-    this.ensureAllowed();
-    this.ensureMounted();
-    this.iframe.contentWindow.postMessage({
-      type: EventTypes.TRACK,
-      value: { value, metric, context: getContext() },
-    }, "*");
   }
 
   public debug = () => {
@@ -78,115 +39,16 @@ class Metrecord {
     this.iframe.contentWindow.postMessage({type: EventTypes.SET_DEBUG_MODE, value: this.debugMode}, "*");
   }
 
-  private injectFetch = () => {
-    (window as any)._fetch = window.fetch;
-    window.fetch = (uri, options, ...args) => {
-      const start = window.performance.now();
-      return (window as any)._fetch(uri, options, ...args).then((response: any) => {
-        let error = null;
-        if (response.status >= 500) {
-          error = 'SERVER';
-        } else if (response.status >= 400) {
-          error = 'CLIENT';
-        }
-        const responseData = {
-          status: response.status,
-          error,
-        };
-        const copiedOptions = { ...options };
-        delete copiedOptions['body'];
-        if (copiedOptions.hasOwnProperty('headers') && typeof copiedOptions.headers === 'object') {
-          delete (copiedOptions.headers as any)['Authorization'];
-        }
-        const totalTime = window.performance.now() - start;
-        setTimeout(this.onFetchResponse.bind(this), 1, { uri, options: copiedOptions, ...args }, totalTime, responseData);
-        return response;
-      });
-    };
+  public open = () => {
+    this.ensureMounted();
+    this.ensureAllowed();
+    this.iframe.contentWindow.postMessage({type: EventTypes.START_FEEDBACK_FLOW, value: undefined}, "*");
   }
 
-  private onDocumentClick = (e: any) => {
-    this.clickStack.push({
-      clickTarget: e.target,
-      clientTimestamp: Date.now(),
-    });
-  }
-
-  private onWindowBlur = () => {
-    this.cpuRecorder.stop();
-  }
-
-  private onWindowFocus = () => {
-    // this.cpuRecorder.start();
-  }
-
-  private handleHighCPU = (perf: IPerformanceTrack) => {
-    const highCPUData = {
-      cpuPctUtilization: perf.cpuApprox,
-      clicks: this.clickStack.map(evt => ({
-        elt: evt.clickTarget.outerHTML,
-        clientTimestamp: evt.clientTimestamp
-      })),
-      context: getContext(),
-    };
-
-    this.iframe.contentWindow.postMessage({
-      type: EventTypes.HIGH_CPU,
-      value: highCPUData,
-    }, "*");
-  }
-
-  private onFetchResponse = (request: any, value: number, response: any) => {
-    this.iframe.contentWindow.postMessage({
-      type: EventTypes.AJAX,
-      value: {
-        request,
-        value,
-        response,
-      },
-    }, '*');
-  }
-
-  private onWindowUnhandledRejection = (e: any) => {
-    const errorData = {
-      message: e.reason.message,
-      fileName: e.reason.fileName,
-      lineNumber: e.reason.lineNumber,
-      columnNumber: e.reason.columnNumber,
-      name: e.reason.name,
-      clientTimestamp: Date.now(),
-      context: getContext(),
-      clicks: this.clickStack.map(evt => ({
-        elt: evt.clickTarget.outerHTML,
-        clientTimestamp: evt.clientTimestamp,
-      }))
-    };
-    this.iframe.contentWindow.postMessage({
-      type: EventTypes.ERROR,
-      value: errorData,
-    }, "*");
-  }
-
-  private onWindowError = (message: string, fileName: string, lineNumber: number, columnNumber: number, error: Error) => {
-    const errorData = {
-      message,
-      fileName,
-      lineNumber,
-      columnNumber,
-      stack: error.stack,
-      name: error.name,
-      clientTimestamp: Date.now(),
-      context: getContext(),
-      clicks: this.clickStack.map(evt => ({
-        elt: evt.clickTarget.outerHTML,
-        clientTimestamp: evt.clientTimestamp,
-      }))
-    };
-    this.iframe.contentWindow.postMessage({
-      type: EventTypes.ERROR,
-      value: errorData,
-    }, "*");
-    return false;
+  public submit = () => {
+    this.ensureMounted();
+    this.ensureAllowed();
+    // TODO: submit some feedback
   }
 
   private getUserId = () => {
@@ -216,9 +78,20 @@ class Metrecord {
     }
   }
 
+  private onChangeContainerClass = (classnames: string) => {
+    this.iframe.className = classnames;
+    if (classnames) {
+      this.iframe.contentWindow.postMessage({ type: EventTypes.CHANGE_CONTAINER_CLASS_DONE, value: null }, '*');
+    }
+  }
+
+
   private receiveMessage = (event: MessageEvent) => {
     if (!!event && !!event.data && !!event.data.type) {
       switch (event.data.type) {
+        case EventTypes.CHANGE_CONTAINER_CLASS:
+          this.onChangeContainerClass(event.data.value);
+          break;
         case EventTypes.DOMAIN_NOT_ALLOWED:
           this.handleDomainNotAllowed();
           break;
@@ -231,8 +104,8 @@ class Metrecord {
 
   private handleBootstrapDone = () => {
     const metrecordApi = (window as any).metrecord;
-    metrecordApi.snap = this.snap;
-    metrecordApi.track = this.track;
+    metrecordApi.open = this.open;
+    metrecordApi.submit = this.submit;
     metrecordApi.debug = this.debug;
     metrecordApi._c = (window as any).metrecord._c;
 
@@ -252,18 +125,18 @@ class Metrecord {
           clientId: this.clientId,
           context: getContext(),
           user: this.getUserId(),
+          appName: this.appName,
         }}, "*");
       };
       iframe.src = IFRAME_URL;
       iframe.id = IFRAME_ID;
       iframe.crossorigin = "anonymous";
-      iframe.style = "width: 0; height: 0; z-index: -1; visibility: hidden; display: none;";
       this.iframe = iframe;
     }
   }
 
   private runPriorCalls = () => {
-    const allowedCalls = ["snap", "debug", "track"];
+    const allowedCalls = ["open", "debug", "submit"];
     const priorCalls = ((window as any).metrecord && (window as any).metrecord._c && typeof (window as any).metrecord._c === "object") ? (window as any).metrecord._c : [];
     priorCalls.forEach((call: string[]) => {
       const method = call[0];

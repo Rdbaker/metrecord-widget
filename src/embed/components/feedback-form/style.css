@@ -1,0 +1,191 @@
+.feedback-modal-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0.4);
+  transition: all ease 0.5s 0.1s;
+  opacity: 0;
+}
+
+.feedback-modal-container.feedback-modal-container--hidden {
+  opacity: 0;
+}
+
+.feedback-modal-overlay-mask {
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.feedback-modal-content.mobile {
+  width: 80%;
+}
+
+.feedback-modal-content.feedback-modal-content--hidden {
+  margin-top: 5%;
+  opacity: 0;
+}
+
+.feedback-modal-content {
+  background: white;
+  width: 40%;
+  margin: 10% auto 0;
+  padding: 20px;
+  border-radius: 8px;
+  transition: all ease 0.5s;
+}
+
+.feedback-modal-header-container {
+  border-bottom: 1px solid blue;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.feedback-modal-header-container > h1 {
+  margin: 10px 0;
+}
+
+.feedback-modal-provider-button.mobile {
+  width: 65%;
+}
+
+.feedback-modal-provider-button {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 20px;
+}
+
+.feedback-modal-provider-help {
+  text-align: center;
+}
+
+.feedback-modal-identity-confirm-form {
+  text-align: center;
+}
+
+.feedback-modal-identity-confirm-form input:focus,
+.feedback-modal-identity-confirm-form input:active {
+  border-bottom-color: #0062cc;
+}
+
+.feedback-modal-identity-confirm-form input:not(.mobile) {
+  width: 70%;
+}
+
+.feedback-modal-identity-confirm-form input.mobile {
+  margin-bottom: 12px;
+}
+
+.feedback-modal-identity-confirm-form input {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  font-size: 16px;
+}
+
+.feedback-modal-identity-input-container:not(.mobile) {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.feedback-modal-identity-input-container {
+  width: 70%;
+  margin-right: 15%;
+  margin-left: 15%;
+}
+
+.feedback-modal-sms-verify {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+a.metrecord-poweredby-container {
+  color: #3e3e3e;
+  font-size: 11px;
+  text-decoration: none;
+  margin-top: 15px;
+  display: block;
+  text-align: center;
+}
+
+.metrecord-poweredby-container .metrecord-poweredby-link {
+  color: blue;
+}
+
+.sms-char-code-input.is-completed {
+  border-color: #3b8ec8;
+  border-width: 2px;
+}
+
+.sms-char-code-input {
+  font-size: 18px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: none;
+  border: 1px solid #bbb;
+  width: 44px;
+  height: 50px
+}
+
+.feedback-modal-sms-verify-inputs.mobile {
+  width: 100%;
+}
+
+.feedback-modal-sms-verify-inputs {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.feedback-modal-sms-verify-failed--helptext {
+  margin-top: 8px;
+  color: red;
+  font-size: 12px;
+}
+
+.feedback-modal-sms-verify-pending--helptext {
+  margin-top: 8px;
+  display: flex;
+  align-items: baseline;
+  font-size: 12px;
+  justify-content: center;
+}
+
+.metrecord-feedback-wait-for-google--text > svg {
+  margin: 0 5px;
+}
+
+.metrecord-feedback-wait-for-google--text > .LoadingDots {
+  margin-left: 3px;
+}
+
+.metrecord-feedback-wait-for-google--text {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.feedback-modal-container.feedback-form-transition-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.feedback-modal-container.feedback-form-transition-enter-done,
+.feedback-modal-container.feedback-form-transition-enter-active {
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+.feedback-form-transition-exit {
+  opacity: 0;
+}
+.feedback-form-transition-exit-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+
