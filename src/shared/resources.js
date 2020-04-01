@@ -10,11 +10,11 @@ if (ENVIRONMENT === "production") {
   };
 } else {
   ResourcesConstants = {
-    API_URL: "http://localhost:4000",
+    API_URL: "http://localhost:4050",
     APP_URL: "http://localhost:3000",
     IFRAME_URL: "http://localhost:9001/index-embed.html",
-    WS_URL: "ws://localhost:4000",
-    WWW_URL: "https://localhost:4000",
+    WS_URL: "ws://localhost:4050",
+    WWW_URL: "https://localhost:4050",
   };
 }
 

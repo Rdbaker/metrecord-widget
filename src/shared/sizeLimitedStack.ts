@@ -14,7 +14,7 @@ export class SizeLimitedStack<T> {
     }
   }
 
-  pop(): T {
+  pop(): T | undefined {
     return this.array.shift();
   }
 
@@ -26,8 +26,20 @@ export class SizeLimitedStack<T> {
     return this.array[0];
   }
 
+  size(): number {
+    return this.array.length;
+  }
+
   map(callbackFn: (value: T, index: number, array: T[]) => void, thisArg?: any) {
     return this.array.map(callbackFn, thisArg);
+  }
+
+  forEach(callbackFn: (value: T, index: number, array: T[]) => void, thisArg?: any) {
+    return this.array.forEach(callbackFn, thisArg);
+  }
+
+  filter(callbackFn: (value: T, index: number, array: T[]) => void, thisArg?: any) {
+    return this.array.filter(callbackFn, thisArg);
   }
 
   exhaust(callbackFn: (value: T, index: number, array: T[]) => void, thisArg?: any) {
