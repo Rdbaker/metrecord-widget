@@ -6,7 +6,7 @@ const paths = {
 }
 
 module.exports = {
-  entry: './src/embed/index.tsx',
+  entry: './src/embed/index.ts',
   devServer: {
     contentBase: path.join(__dirname, '..', '..', 'dist'),
     compress: true,

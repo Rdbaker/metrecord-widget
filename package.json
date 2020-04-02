@@ -5,9 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "phoenix": "^1.4.10",
-    "ramda": "^0.26.1",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "ramda": "^0.26.1"
   },
   "scripts": {
     "start": "yarn start:shim & yarn start:embed",
